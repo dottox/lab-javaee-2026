@@ -1,0 +1,13 @@
+package com.javaee2026.citruschat.shared.domain.errors;
+
+public enum ErrorCode {
+    UNEXPECTED_ERROR,
+    EMAIL_ALREADY_IN_USE,
+    USERNAME_ALREADY_IN_USE,
+    PHONE_NUMBER_ALREADY_IN_USE,
+    INVALID_USERNAME,
+    INVALID_EMAIL,
+    INVALID_PHONE_NUMBER,
+    USER_ALREADY_ACTIVE,
+    USER_ALREADY_INACTIVE,
+}
