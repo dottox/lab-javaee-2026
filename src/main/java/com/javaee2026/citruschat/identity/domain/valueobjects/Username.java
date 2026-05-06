@@ -3,6 +3,8 @@ package com.javaee2026.citruschat.identity.domain.valueobjects;
 import com.javaee2026.citruschat.shared.domain.constants.ErrorMessages;
 import lombok.Getter;
 
+import java.text.Normalizer;
+
 @Getter
 public final class Username {
 
@@ -23,7 +25,12 @@ public final class Username {
     }
 
     private String normalize(String input) {
-        return input.trim().toLowerCase();
+        String normalized = Normalizer.normalize(input.trim(), Normalizer.Form.NFD)
+                .replaceAll("\\p{M}", "");
+
+        return normalized
+                .toLowerCase()
+                .replaceAll("\\s+", "_");
     }
 
     private void validate(String username) {

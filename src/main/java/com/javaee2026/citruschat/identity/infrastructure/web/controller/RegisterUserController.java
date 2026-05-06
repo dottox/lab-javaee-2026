@@ -9,7 +9,7 @@ import com.javaee2026.citruschat.shared.infrastructure.constants.ApiRoutes;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(ApiRoutes.API_USERS)
+@RequestMapping(ApiRoutes.API_ADMIN_USERS)
 public class RegisterUserController {
 
 
@@ -23,8 +23,9 @@ public class RegisterUserController {
     public RegisterUserResponse register(@RequestBody RegisterUserRequest request) {
         RegisterUserCommand command = new RegisterUserCommand(
                 request.email(),
-                request.username(),
-                request.phoneNumber()
+                request.phoneNumber(),
+                request.firstName(),
+                request.lastName()
         );
 
         RegisterUserResult result = registerUserUseCase.execute(command);

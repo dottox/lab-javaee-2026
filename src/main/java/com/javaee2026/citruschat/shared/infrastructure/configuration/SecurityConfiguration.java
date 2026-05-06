@@ -16,7 +16,7 @@ public class SecurityConfiguration {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, ApiRoutes.API_USERS).permitAll()
+                        .requestMatchers(HttpMethod.POST, ApiRoutes.API_ADMIN_USERS).permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())

@@ -9,6 +9,7 @@ import com.javaee2026.citruschat.identity.application.ports.IPasswordHasher;
 import com.javaee2026.citruschat.identity.application.ports.IUserRepository;
 import com.javaee2026.citruschat.identity.application.results.RegisterUserResult;
 import com.javaee2026.citruschat.identity.domain.factory.UserFactory;
+import com.javaee2026.citruschat.identity.domain.factory.UsernameFactory;
 import com.javaee2026.citruschat.identity.domain.model.User;
 import com.javaee2026.citruschat.identity.domain.valueobjects.PhoneNumber;
 import com.javaee2026.citruschat.identity.domain.valueobjects.UserEmail;
@@ -20,22 +21,29 @@ public class RegisterUserUseCase {
     private final IDefaultPasswordGenerator defaultPasswordGenerator;
     private final IPasswordHasher passwordHasher;
     private final UserFactory userFactory;
+    private final UsernameFactory usernameFactory;
 
     public RegisterUserUseCase(
             IUserRepository userRepository,
             IDefaultPasswordGenerator defaultPasswordGenerator,
             IPasswordHasher passwordHasher,
-            UserFactory userFactory
+            UserFactory userFactory,
+            UsernameFactory usernameFactory
     ) {
         this.userRepository = userRepository;
         this.defaultPasswordGenerator = defaultPasswordGenerator;
         this.passwordHasher = passwordHasher;
         this.userFactory = userFactory;
+        this.usernameFactory = usernameFactory;
     }
 
     public RegisterUserResult execute(RegisterUserCommand command) {
         UserEmail email = new UserEmail(command.email());
-        Username username = new Username(command.username());
+        Username username =
+                usernameFactory.create(
+                        command.firstName(),
+                        command.lastName()
+                );
         PhoneNumber phoneNumber = new PhoneNumber(command.phoneNumber());
 
         ensureEmailIsAvailable(email);

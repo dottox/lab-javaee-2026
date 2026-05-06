@@ -5,7 +5,9 @@ import com.javaee2026.citruschat.identity.application.ports.IPasswordHasher;
 import com.javaee2026.citruschat.identity.application.ports.IUserRepository;
 import com.javaee2026.citruschat.identity.application.usecases.RegisterUserUseCase;
 import com.javaee2026.citruschat.identity.domain.factory.UserFactory;
+import com.javaee2026.citruschat.identity.domain.factory.UsernameFactory;
 import com.javaee2026.citruschat.identity.infrastructure.persistence.jpa.mapper.UserMapper;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,6 +20,11 @@ public class IdentityBeansConfiguration {
     }
 
     @Bean
+    public UsernameFactory usernameFactory() {
+        return new UsernameFactory();
+    }
+
+    @Bean
     public UserMapper userMapper(UserFactory userFactory) {
         return new UserMapper(userFactory);
     }
@@ -27,13 +34,15 @@ public class IdentityBeansConfiguration {
             IUserRepository userRepository,
             IDefaultPasswordGenerator defaultPasswordGenerator,
             IPasswordHasher passwordHasher,
-            UserFactory userFactory
+            UserFactory userFactory,
+            UsernameFactory usernameFactory
     ) {
         return new RegisterUserUseCase(
                 userRepository,
                 defaultPasswordGenerator,
                 passwordHasher,
-                userFactory
+                userFactory,
+                usernameFactory
         );
     }
 }

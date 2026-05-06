@@ -7,5 +7,7 @@ import org.aspectj.weaver.ast.Not;
 public record RegisterUserRequest(
         @NotBlank @Email String email,
         @NotBlank String phoneNumber,
-        @NotBlank String username) {
+        @NotBlank String firstName,
+        @NotBlank String lastName
+) {
 }
