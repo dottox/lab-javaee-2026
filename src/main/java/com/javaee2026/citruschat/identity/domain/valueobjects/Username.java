@@ -3,8 +3,6 @@ package com.javaee2026.citruschat.identity.domain.valueobjects;
 import com.javaee2026.citruschat.shared.domain.constants.ErrorMessages;
 import lombok.Getter;
 
-import java.text.Normalizer;
-
 @Getter
 public final class Username {
 
@@ -14,28 +12,25 @@ public final class Username {
 
 	private final String value;
 
-	public Username(String raw) {
-		if (raw == null) {
+	public Username(String value) {
+
+		if (value == null) {
 			throw new IllegalArgumentException(ErrorMessages.USERNAME_CANNOT_BE_NULL);
 		}
 
-		String normalized = normalize(raw);
-		validate(normalized);
-		this.value = normalized;
-	}
+		validate(value);
 
-	private String normalize(String input) {
-		String normalized = Normalizer.normalize(input.trim(), Normalizer.Form.NFD).replaceAll("\\p{M}", "");
-
-		return normalized.toLowerCase().replaceAll("\\s+", "_");
+		this.value = value;
 	}
 
 	private void validate(String username) {
+
 		if (username.isBlank()) {
 			throw new IllegalArgumentException(ErrorMessages.USERNAME_CANNOT_BE_EMPTY);
 		}
 
 		if (username.length() < MIN_LENGTH || username.length() > MAX_LENGTH) {
+
 			throw new IllegalArgumentException(ErrorMessages.usernameLengthBetween(MIN_LENGTH, MAX_LENGTH));
 		}
 
@@ -44,6 +39,7 @@ public final class Username {
 		}
 
 		if (username.startsWith("_") || username.endsWith("_")) {
+
 			throw new IllegalArgumentException(ErrorMessages.USERNAME_INVALID_BOUNDARY_UNDERSCORE);
 		}
 
