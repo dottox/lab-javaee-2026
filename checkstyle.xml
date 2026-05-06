@@ -4,10 +4,17 @@
         "https://checkstyle.org/dtds/configuration_1_3.dtd">
 
 <module name="Checker">
-    <module name="JavadocPackage"/>
+
+    <!-- Disabled: package-info.java is not required for every package. -->
+    <!-- <module name="JavadocPackage"/> -->
 
     <module name="TreeWalker">
-        <module name="FinalParameters"/>
-        <module name="MissingJavadocMethod"/>
+
+        <!-- Disabled: final parameters are not required by project convention. -->
+        <!-- <module name="FinalParameters"/> -->
+
+        <!-- Disabled: Javadocs are not required for every method. -->
+        <!-- <module name="MissingJavadocMethod"/> -->
+
     </module>
 </module>

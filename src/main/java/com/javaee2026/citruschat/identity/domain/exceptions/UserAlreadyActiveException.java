@@ -4,7 +4,7 @@ import com.javaee2026.citruschat.shared.domain.constants.ErrorMessages;
 
 public class UserAlreadyActiveException extends RuntimeException {
 
-    public UserAlreadyActiveException() {
-        super(ErrorMessages.USER_ALREADY_ACTIVE);
-    }
+	public UserAlreadyActiveException() {
+		super(ErrorMessages.USER_ALREADY_ACTIVE);
+	}
 }

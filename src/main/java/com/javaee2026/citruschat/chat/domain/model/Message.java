@@ -2,7 +2,6 @@ package com.javaee2026.citruschat.chat.domain.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.context.annotation.Primary;
 
 import java.awt.*;
 import java.util.UUID;
@@ -11,8 +10,8 @@ import java.util.UUID;
 @Data
 public class Message {
 
-    private UUID id;
+	private UUID id;
 
-    public String content;
+	public String content;
 
 }

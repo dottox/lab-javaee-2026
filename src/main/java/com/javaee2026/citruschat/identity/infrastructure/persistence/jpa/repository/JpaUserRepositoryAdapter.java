@@ -14,60 +14,51 @@ import java.util.Optional;
 @Repository
 public class JpaUserRepositoryAdapter implements IUserRepository {
 
-    private final SpringDataUserRepository repository;
-    private final UserMapper userMapper;
+	private final SpringDataUserRepository repository;
+	private final UserMapper userMapper;
 
-    public JpaUserRepositoryAdapter(
-            SpringDataUserRepository repository,
-            UserMapper userMapper
-    ) {
-        this.repository = repository;
-        this.userMapper = userMapper;
-    }
+	public JpaUserRepositoryAdapter(SpringDataUserRepository repository, UserMapper userMapper) {
+		this.repository = repository;
+		this.userMapper = userMapper;
+	}
 
-    @Override
-    public Optional<User> findById(UserId id) {
-        return repository.findById(id.value())
-                .map(userMapper::toDomain);
-    }
+	@Override
+	public Optional<User> findById(UserId id) {
+		return repository.findById(id.value()).map(userMapper::toDomain);
+	}
 
-    @Override
-    public Optional<User> findByEmail(UserEmail email) {
-        return repository.findByEmail(email.getValue())
-                .map(userMapper::toDomain);
-    }
+	@Override
+	public Optional<User> findByEmail(UserEmail email) {
+		return repository.findByEmail(email.getValue()).map(userMapper::toDomain);
+	}
 
-    @Override
-    public Optional<User> findByUsername(Username username) {
-        return repository.findByUsername(username.getValue())
-                .map(userMapper::toDomain);
-    }
+	@Override
+	public Optional<User> findByUsername(Username username) {
+		return repository.findByUsername(username.getValue()).map(userMapper::toDomain);
+	}
 
-    @Override
-    public Optional<User> findByPhoneNumber(PhoneNumber phoneNumber) {
-        return repository.findByPhoneNumber(phoneNumber.getValue())
-                .map(userMapper::toDomain);
-    }
+	@Override
+	public Optional<User> findByPhoneNumber(PhoneNumber phoneNumber) {
+		return repository.findByPhoneNumber(phoneNumber.getValue()).map(userMapper::toDomain);
+	}
 
-    @Override
-    public boolean existsByEmail(UserEmail email) {
-        return repository.existsByEmail(email.getValue());
-    }
+	@Override
+	public boolean existsByEmail(UserEmail email) {
+		return repository.existsByEmail(email.getValue());
+	}
 
-    @Override
-    public boolean existsByUsername(Username username) {
-        return repository.existsByUsername(username.getValue());
-    }
+	@Override
+	public boolean existsByUsername(Username username) {
+		return repository.existsByUsername(username.getValue());
+	}
 
-    @Override
-    public boolean existsByPhoneNumber(PhoneNumber phoneNumber) {
-        return repository.existsByPhoneNumber(phoneNumber.getValue());
-    }
+	@Override
+	public boolean existsByPhoneNumber(PhoneNumber phoneNumber) {
+		return repository.existsByPhoneNumber(phoneNumber.getValue());
+	}
 
-    @Override
-    public User save(User user) {
-        return userMapper.toDomain(
-                repository.save(userMapper.toJpa(user))
-        );
-    }
+	@Override
+	public User save(User user) {
+		return userMapper.toDomain(repository.save(userMapper.toJpa(user)));
+	}
 }

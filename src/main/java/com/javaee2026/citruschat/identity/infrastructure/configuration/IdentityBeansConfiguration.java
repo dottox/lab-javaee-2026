@@ -14,35 +14,26 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class IdentityBeansConfiguration {
 
-    @Bean
-    public UserFactory userFactory() {
-        return new UserFactory();
-    }
+	@Bean
+	public UserFactory userFactory() {
+		return new UserFactory();
+	}
 
-    @Bean
-    public UsernameFactory usernameFactory() {
-        return new UsernameFactory();
-    }
+	@Bean
+	public UsernameFactory usernameFactory() {
+		return new UsernameFactory();
+	}
 
-    @Bean
-    public UserMapper userMapper(UserFactory userFactory) {
-        return new UserMapper(userFactory);
-    }
+	@Bean
+	public UserMapper userMapper(UserFactory userFactory) {
+		return new UserMapper(userFactory);
+	}
 
-    @Bean
-    public RegisterUserUseCase registerUserUseCase(
-            IUserRepository userRepository,
-            IDefaultPasswordGenerator defaultPasswordGenerator,
-            IPasswordHasher passwordHasher,
-            UserFactory userFactory,
-            UsernameFactory usernameFactory
-    ) {
-        return new RegisterUserUseCase(
-                userRepository,
-                defaultPasswordGenerator,
-                passwordHasher,
-                userFactory,
-                usernameFactory
-        );
-    }
+	@Bean
+	public RegisterUserUseCase registerUserUseCase(IUserRepository userRepository,
+			IDefaultPasswordGenerator defaultPasswordGenerator, IPasswordHasher passwordHasher, UserFactory userFactory,
+			UsernameFactory usernameFactory) {
+		return new RegisterUserUseCase(userRepository, defaultPasswordGenerator, passwordHasher, userFactory,
+				usernameFactory);
+	}
 }

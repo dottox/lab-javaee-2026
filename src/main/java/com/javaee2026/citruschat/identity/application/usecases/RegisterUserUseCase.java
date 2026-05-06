@@ -17,69 +17,55 @@ import com.javaee2026.citruschat.identity.domain.valueobjects.Username;
 
 public class RegisterUserUseCase {
 
-    private final IUserRepository userRepository;
-    private final IDefaultPasswordGenerator defaultPasswordGenerator;
-    private final IPasswordHasher passwordHasher;
-    private final UserFactory userFactory;
-    private final UsernameFactory usernameFactory;
+	private final IUserRepository userRepository;
+	private final IDefaultPasswordGenerator defaultPasswordGenerator;
+	private final IPasswordHasher passwordHasher;
+	private final UserFactory userFactory;
+	private final UsernameFactory usernameFactory;
 
-    public RegisterUserUseCase(
-            IUserRepository userRepository,
-            IDefaultPasswordGenerator defaultPasswordGenerator,
-            IPasswordHasher passwordHasher,
-            UserFactory userFactory,
-            UsernameFactory usernameFactory
-    ) {
-        this.userRepository = userRepository;
-        this.defaultPasswordGenerator = defaultPasswordGenerator;
-        this.passwordHasher = passwordHasher;
-        this.userFactory = userFactory;
-        this.usernameFactory = usernameFactory;
-    }
+	public RegisterUserUseCase(IUserRepository userRepository, IDefaultPasswordGenerator defaultPasswordGenerator,
+			IPasswordHasher passwordHasher, UserFactory userFactory, UsernameFactory usernameFactory) {
+		this.userRepository = userRepository;
+		this.defaultPasswordGenerator = defaultPasswordGenerator;
+		this.passwordHasher = passwordHasher;
+		this.userFactory = userFactory;
+		this.usernameFactory = usernameFactory;
+	}
 
-    public RegisterUserResult execute(RegisterUserCommand command) {
-        UserEmail email = new UserEmail(command.email());
-        Username username =
-                usernameFactory.create(
-                        command.firstName(),
-                        command.lastName()
-                );
-        PhoneNumber phoneNumber = new PhoneNumber(command.phoneNumber());
+	public RegisterUserResult execute(RegisterUserCommand command) {
+		UserEmail email = new UserEmail(command.email());
+		Username username = usernameFactory.create(command.firstName(), command.lastName());
+		PhoneNumber phoneNumber = new PhoneNumber(command.phoneNumber());
 
-        ensureEmailIsAvailable(email);
-        ensureUsernameIsAvailable(username);
-        ensurePhoneNumberIsAvailable(phoneNumber);
+		ensureEmailIsAvailable(email);
+		ensureUsernameIsAvailable(username);
+		ensurePhoneNumberIsAvailable(phoneNumber);
 
-        String temporaryPassword = defaultPasswordGenerator.generate();
-        String passwordHash = passwordHasher.hash(temporaryPassword);
+		String temporaryPassword = defaultPasswordGenerator.generate();
+		String passwordHash = passwordHasher.hash(temporaryPassword);
 
-        User user = userFactory.createNew(
-                email,
-                username,
-                phoneNumber,
-                passwordHash
-        );
+		User user = userFactory.createNew(email, username, phoneNumber, passwordHash);
 
-        User savedUser = userRepository.save(user);
+		User savedUser = userRepository.save(user);
 
-        return new RegisterUserResult(savedUser, temporaryPassword);
-    }
+		return new RegisterUserResult(savedUser, temporaryPassword);
+	}
 
-    private void ensureEmailIsAvailable(UserEmail email) {
-        if (userRepository.existsByEmail(email)) {
-            throw new EmailAlreadyInUseException();
-        }
-    }
+	private void ensureEmailIsAvailable(UserEmail email) {
+		if (userRepository.existsByEmail(email)) {
+			throw new EmailAlreadyInUseException();
+		}
+	}
 
-    private void ensureUsernameIsAvailable(Username username) {
-        if (userRepository.existsByUsername(username)) {
-            throw new UsernameAlreadyInUseException();
-        }
-    }
+	private void ensureUsernameIsAvailable(Username username) {
+		if (userRepository.existsByUsername(username)) {
+			throw new UsernameAlreadyInUseException();
+		}
+	}
 
-    private void ensurePhoneNumberIsAvailable(PhoneNumber phoneNumber) {
-        if (userRepository.existsByPhoneNumber(phoneNumber)) {
-            throw new PhoneNumberAlreadyInUseException();
-        }
-    }
+	private void ensurePhoneNumberIsAvailable(PhoneNumber phoneNumber) {
+		if (userRepository.existsByPhoneNumber(phoneNumber)) {
+			throw new PhoneNumberAlreadyInUseException();
+		}
+	}
 }

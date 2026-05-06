@@ -5,14 +5,14 @@ import com.javaee2026.citruschat.shared.domain.errors.ErrorCode;
 
 public class UsernameAlreadyInUseException extends RuntimeException {
 
-    private final ErrorCode errorCode;
+	private final ErrorCode errorCode;
 
-    public UsernameAlreadyInUseException() {
-        super(ErrorMessages.USERNAME_ALREADY_IN_USE);
-        this.errorCode = ErrorCode.USERNAME_ALREADY_IN_USE;
-    }
+	public UsernameAlreadyInUseException() {
+		super(ErrorMessages.USERNAME_ALREADY_IN_USE);
+		this.errorCode = ErrorCode.USERNAME_ALREADY_IN_USE;
+	}
 
-    public ErrorCode getErrorCode() {
-        return errorCode;
-    }
+	public ErrorCode getErrorCode() {
+		return errorCode;
+	}
 }

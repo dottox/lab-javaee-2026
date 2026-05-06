@@ -12,30 +12,21 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(ApiRoutes.API_ADMIN_USERS)
 public class RegisterUserController {
 
+	private final RegisterUserUseCase registerUserUseCase;
 
-    private final RegisterUserUseCase registerUserUseCase;
+	public RegisterUserController(RegisterUserUseCase registerUserUseCase) {
+		this.registerUserUseCase = registerUserUseCase;
+	}
 
-    public RegisterUserController(RegisterUserUseCase registerUserUseCase) {
-        this.registerUserUseCase = registerUserUseCase;
-    }
+	@PostMapping
+	public RegisterUserResponse register(@RequestBody RegisterUserRequest request) {
+		RegisterUserCommand command = new RegisterUserCommand(request.email(), request.phoneNumber(),
+				request.firstName(), request.lastName());
 
-    @PostMapping
-    public RegisterUserResponse register(@RequestBody RegisterUserRequest request) {
-        RegisterUserCommand command = new RegisterUserCommand(
-                request.email(),
-                request.phoneNumber(),
-                request.firstName(),
-                request.lastName()
-        );
+		RegisterUserResult result = registerUserUseCase.execute(command);
 
-        RegisterUserResult result = registerUserUseCase.execute(command);
-
-        return new RegisterUserResponse(
-                result.user().getId().value().toString(),
-                result.user().getEmail().getValue(),
-                result.user().getUsername().getValue(),
-                result.user().getPhoneNumber().getValue(),
-                result.temporaryPassword()
-        );
-    }
+		return new RegisterUserResponse(result.user().getId().value().toString(), result.user().getEmail().getValue(),
+				result.user().getUsername().getValue(), result.user().getPhoneNumber().getValue(),
+				result.temporaryPassword());
+	}
 }

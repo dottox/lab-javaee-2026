@@ -9,14 +9,14 @@ import com.javaee2026.citruschat.shared.domain.valueobjects.UserId;
 import java.util.Optional;
 
 public interface IUserRepository {
-    User save(User user);
+	User save(User user);
 
-    Optional<User> findById(UserId id);
-    Optional<User> findByEmail(UserEmail email);
-    Optional<User> findByUsername(Username username);
-    Optional<User> findByPhoneNumber(PhoneNumber phoneNumber);
+	Optional<User> findById(UserId id);
+	Optional<User> findByEmail(UserEmail email);
+	Optional<User> findByUsername(Username username);
+	Optional<User> findByPhoneNumber(PhoneNumber phoneNumber);
 
-    boolean existsByEmail(UserEmail email);
-    boolean existsByUsername(Username username);
-    boolean existsByPhoneNumber(PhoneNumber phoneNumber);
+	boolean existsByEmail(UserEmail email);
+	boolean existsByUsername(Username username);
+	boolean existsByPhoneNumber(PhoneNumber phoneNumber);
 }

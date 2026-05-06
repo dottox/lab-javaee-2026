@@ -8,8 +8,8 @@ import java.util.UUID;
 @Component
 public class DefaultPasswordGenerator implements IDefaultPasswordGenerator {
 
-    @Override
-    public String generate() {
-        return UUID.randomUUID().toString().substring(0, 8);
-    }
+	@Override
+	public String generate() {
+		return UUID.randomUUID().toString().substring(0, 8);
+	}
 }

@@ -12,29 +12,28 @@ import java.util.UUID;
 @Data
 public class UserJpaEntity {
 
-    @Id
-    private UUID id;
+	@Id
+	private UUID id;
 
-    @Column(nullable = false, unique = true)
-    private String email;
+	@Column(nullable = false, unique = true)
+	private String email;
 
-    @Column(nullable = false)
-    private String username;
+	@Column(nullable = false)
+	private String username;
 
-    @Column(nullable = false)
-    private String phoneNumber;
+	@Column(nullable = false)
+	private String phoneNumber;
 
+	@Column(nullable = false)
+	private String passwordHash;
 
-    @Column(nullable = false)
-    private String passwordHash;
+	@Column(nullable = false, updatable = false)
+	private Instant createdAt;
 
-    @Column(nullable = false, updatable = false)
-    private Instant createdAt;
+	@Column(nullable = false)
+	private Instant updatedAt;
 
-    @Column(nullable = false)
-    private Instant updatedAt;
-
-    @Column(nullable = true)
-    private Instant deletedAt;
+	@Column(nullable = true)
+	private Instant deletedAt;
 
 }

@@ -6,16 +6,13 @@ import java.text.Normalizer;
 
 public class UsernameFactory {
 
-    public Username create(String firstName, String lastName) {
+	public Username create(String firstName, String lastName) {
 
-        String raw = firstName + "_" + lastName;
+		String raw = firstName + "_" + lastName;
 
-        String normalized = Normalizer.normalize(raw, Normalizer.Form.NFD)
-                .replaceAll("\\p{M}", "")
-                .trim()
-                .toLowerCase()
-                .replaceAll("\\s+", "_");
+		String normalized = Normalizer.normalize(raw, Normalizer.Form.NFD).replaceAll("\\p{M}", "").trim().toLowerCase()
+				.replaceAll("\\s+", "_");
 
-        return new Username(normalized);
-    }
+		return new Username(normalized);
+	}
 }

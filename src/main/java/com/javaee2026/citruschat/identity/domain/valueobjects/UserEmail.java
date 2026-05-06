@@ -19,22 +19,22 @@ Eso lo hace el UserEmail, que es un Value Object.
 @Getter
 public final class UserEmail {
 
-    private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@(.+)$";
-    private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
+	private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@(.+)$";
+	private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
 
-    private final String value;
+	private final String value;
 
-    public UserEmail(String email) {
-        if (email == null) {
-            throw new IllegalArgumentException(ErrorMessages.EMAIL_CANNOT_BE_NULL);
-        }
+	public UserEmail(String email) {
+		if (email == null) {
+			throw new IllegalArgumentException(ErrorMessages.EMAIL_CANNOT_BE_NULL);
+		}
 
-        String normalized = email.trim().toLowerCase();
+		String normalized = email.trim().toLowerCase();
 
-        if (!EMAIL_PATTERN.matcher(normalized).matches()) {
-            throw new IllegalArgumentException(ErrorMessages.INVALID_EMAIL_FORMAT);
-        }
+		if (!EMAIL_PATTERN.matcher(normalized).matches()) {
+			throw new IllegalArgumentException(ErrorMessages.INVALID_EMAIL_FORMAT);
+		}
 
-        this.value = normalized;
-    }
+		this.value = normalized;
+	}
 }

@@ -12,35 +12,28 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserMapper {
 
-    private final UserFactory userFactory;
+	private final UserFactory userFactory;
 
-    public UserMapper(UserFactory userFactory) {
-        this.userFactory = userFactory;
-    }
+	public UserMapper(UserFactory userFactory) {
+		this.userFactory = userFactory;
+	}
 
-    public User toDomain(UserJpaEntity entity) {
-        return userFactory.reconstitute(
-                new UserId(entity.getId()),
-                new UserEmail(entity.getEmail()),
-                new Username(entity.getUsername()),
-                new PhoneNumber(entity.getPhoneNumber()),
-                entity.getPasswordHash(),
-                entity.getCreatedAt(),
-                entity.getUpdatedAt(),
-                entity.getDeletedAt()
-        );
-    }
+	public User toDomain(UserJpaEntity entity) {
+		return userFactory.reconstitute(new UserId(entity.getId()), new UserEmail(entity.getEmail()),
+				new Username(entity.getUsername()), new PhoneNumber(entity.getPhoneNumber()), entity.getPasswordHash(),
+				entity.getCreatedAt(), entity.getUpdatedAt(), entity.getDeletedAt());
+	}
 
-    public UserJpaEntity toJpa(User user) {
-        UserJpaEntity entity = new UserJpaEntity();
-        entity.setId(user.getId().value());
-        entity.setEmail(user.getEmail().getValue());
-        entity.setUsername(user.getUsername().getValue());
-        entity.setPhoneNumber(user.getPhoneNumber().getValue());
-        entity.setPasswordHash(user.getPasswordHash());
-        entity.setCreatedAt(user.getCreatedAt());
-        entity.setUpdatedAt(user.getUpdatedAt());
-        entity.setDeletedAt(user.getDeletedAt());
-        return entity;
-    }
+	public UserJpaEntity toJpa(User user) {
+		UserJpaEntity entity = new UserJpaEntity();
+		entity.setId(user.getId().value());
+		entity.setEmail(user.getEmail().getValue());
+		entity.setUsername(user.getUsername().getValue());
+		entity.setPhoneNumber(user.getPhoneNumber().getValue());
+		entity.setPasswordHash(user.getPasswordHash());
+		entity.setCreatedAt(user.getCreatedAt());
+		entity.setUpdatedAt(user.getUpdatedAt());
+		entity.setDeletedAt(user.getDeletedAt());
+		return entity;
+	}
 }
