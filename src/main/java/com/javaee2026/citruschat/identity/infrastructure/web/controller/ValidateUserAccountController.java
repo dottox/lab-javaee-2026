@@ -6,12 +6,12 @@ import com.javaee2026.citruschat.identity.infrastructure.web.dto.request.Validat
 import com.javaee2026.citruschat.identity.infrastructure.web.dto.response.ValidateUserAccountResponse;
 import com.javaee2026.citruschat.shared.infrastructure.constants.ApiRoutes;
 
+import com.javaee2026.citruschat.shared.infrastructure.web.dto.ApiResponse;
 import jakarta.validation.Valid;
 
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -41,11 +41,13 @@ public class ValidateUserAccountController {
 	 * @return validation response
 	 */
 	@PostMapping(ApiRoutes.API_AUTH_VALIDATE_ACCOUNT)
-	@ResponseStatus(HttpStatus.OK)
-	public ValidateUserAccountResponse validateAccount(@Valid @RequestBody final ValidateUserAccountRequest request) {
+	public ResponseEntity<ApiResponse<ValidateUserAccountResponse>> validateAccount(
+			@Valid @RequestBody final ValidateUserAccountRequest request) {
 		validateUserAccountUseCase.execute(
 				new ValidateUserAccountCommand(request.username(), request.temporaryPassword(), request.newPassword()));
 
-		return new ValidateUserAccountResponse(request.username(), true);
+		ValidateUserAccountResponse response = new ValidateUserAccountResponse(request.username(), true);
+
+		return ResponseEntity.ok(ApiResponse.success("Account validated successfully", response));
 	}
 }

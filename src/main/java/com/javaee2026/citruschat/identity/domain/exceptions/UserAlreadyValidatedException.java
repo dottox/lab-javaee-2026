@@ -4,9 +4,9 @@ import com.javaee2026.citruschat.shared.application.exceptions.BusinessException
 import com.javaee2026.citruschat.shared.domain.constants.ErrorMessages;
 import com.javaee2026.citruschat.shared.domain.errors.ErrorCode;
 
-public class UserAlreadyActiveException extends BusinessException {
+public class UserAlreadyValidatedException extends BusinessException {
 
-	public UserAlreadyActiveException() {
-		super(ErrorCode.USER_ALREADY_ACTIVE, ErrorMessages.USER_ALREADY_ACTIVE);
+	public UserAlreadyValidatedException() {
+		super(ErrorCode.USER_ALREADY_VALIDATED, ErrorMessages.USER_ALREADY_VALIDATED);
 	}
 }

@@ -1,7 +1,9 @@
 package com.javaee2026.citruschat.identity.domain.model;
 
+import com.javaee2026.citruschat.identity.domain.exceptions.InvalidUserException;
 import com.javaee2026.citruschat.identity.domain.exceptions.UserAlreadyActiveException;
 import com.javaee2026.citruschat.identity.domain.exceptions.UserAlreadyInactiveException;
+import com.javaee2026.citruschat.identity.domain.exceptions.UserAlreadyValidatedException;
 import com.javaee2026.citruschat.identity.domain.valueobjects.PhoneNumber;
 import com.javaee2026.citruschat.identity.domain.valueobjects.UserEmail;
 import com.javaee2026.citruschat.identity.domain.valueobjects.Username;
@@ -48,10 +50,15 @@ public class User {
 		return deletedAt == null && isValidated();
 	}
 
+	public boolean isValidated() {
+		return validatedAt != null;
+	}
+
 	public void deactivate() {
 		if (!isActive()) {
 			throw new UserAlreadyInactiveException();
 		}
+
 		this.deletedAt = Instant.now();
 		touch();
 	}
@@ -60,6 +67,7 @@ public class User {
 		if (isActive()) {
 			throw new UserAlreadyActiveException();
 		}
+
 		this.deletedAt = null;
 		touch();
 	}
@@ -84,28 +92,25 @@ public class User {
 		touch();
 	}
 
+	public void validateAccount(final String newPasswordHash) {
+		if (isValidated()) {
+			throw new UserAlreadyValidatedException();
+		}
+
+		this.passwordHash = requireNonNull(newPasswordHash, ErrorMessages.PASSWORD_HASH_CANNOT_BE_NULL);
+		this.validatedAt = Instant.now();
+		touch();
+	}
+
 	private void touch() {
 		this.updatedAt = Instant.now();
 	}
 
 	private <T> T requireNonNull(T value, String message) {
 		if (value == null) {
-			throw new IllegalArgumentException(message);
+			throw new InvalidUserException(message);
 		}
+
 		return value;
-	}
-
-	public boolean isValidated() {
-		return validatedAt != null;
-	}
-
-	public void validateAccount(final String newPasswordHash) {
-		if (isValidated()) {
-			throw new IllegalStateException("User account is already validated");
-		}
-
-		this.passwordHash = requireNonNull(newPasswordHash, ErrorMessages.PASSWORD_HASH_CANNOT_BE_NULL);
-		this.validatedAt = Instant.now();
-		touch();
 	}
 }

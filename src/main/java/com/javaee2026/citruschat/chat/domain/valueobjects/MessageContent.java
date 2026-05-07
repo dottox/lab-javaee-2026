@@ -1,15 +1,23 @@
 package com.javaee2026.citruschat.chat.domain.valueobjects;
 
+import com.javaee2026.citruschat.chat.domain.exceptions.InvalidMessageContentException;
+import com.javaee2026.citruschat.shared.domain.constants.ErrorMessages;
+
 public class MessageContent {
+
+	private static final int MAX_LENGTH = 2000;
+
 	private final String value;
 
 	public MessageContent(String value) {
 		if (value == null || value.isBlank()) {
-			throw new IllegalArgumentException("Message content cannot be empty");
+			throw new InvalidMessageContentException(ErrorMessages.MESSAGE_CONTENT_CANNOT_BE_EMPTY);
 		}
-		if (value.length() > 2000) {
-			throw new IllegalArgumentException("Message content is too long");
+
+		if (value.length() > MAX_LENGTH) {
+			throw new InvalidMessageContentException(ErrorMessages.MESSAGE_CONTENT_TOO_LONG(MAX_LENGTH));
 		}
+
 		this.value = value;
 	}
 
