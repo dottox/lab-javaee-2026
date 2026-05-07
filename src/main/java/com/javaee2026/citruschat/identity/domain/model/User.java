@@ -28,10 +28,11 @@ public class User {
 
 	private final Instant createdAt;
 	private Instant updatedAt;
+	private Instant validatedAt;
 	private Instant deletedAt;
 
 	public User(UserId id, UserEmail email, Username username, PhoneNumber phoneNumber, String passwordHash,
-			Instant createdAt, Instant updatedAt, Instant deletedAt) {
+			Instant createdAt, Instant updatedAt, Instant validatedAt, Instant deletedAt) {
 		this.id = requireNonNull(id, ErrorMessages.USER_ID_CANNOT_BE_NULL);
 		this.email = requireNonNull(email, ErrorMessages.EMAIL_CANNOT_BE_NULL);
 		this.username = requireNonNull(username, ErrorMessages.USERNAME_CANNOT_BE_NULL);
@@ -39,11 +40,12 @@ public class User {
 		this.passwordHash = requireNonNull(passwordHash, ErrorMessages.PASSWORD_HASH_CANNOT_BE_NULL);
 		this.createdAt = requireNonNull(createdAt, ErrorMessages.CREATED_AT_CANNOT_BE_NULL);
 		this.updatedAt = requireNonNull(updatedAt, ErrorMessages.UPDATED_AT_CANNOT_BE_NULL);
+		this.validatedAt = validatedAt;
 		this.deletedAt = deletedAt;
 	}
 
 	public boolean isActive() {
-		return deletedAt == null;
+		return deletedAt == null && isValidated();
 	}
 
 	public void deactivate() {
@@ -91,5 +93,19 @@ public class User {
 			throw new IllegalArgumentException(message);
 		}
 		return value;
+	}
+
+	public boolean isValidated() {
+		return validatedAt != null;
+	}
+
+	public void validateAccount(final String newPasswordHash) {
+		if (isValidated()) {
+			throw new IllegalStateException("User account is already validated");
+		}
+
+		this.passwordHash = requireNonNull(newPasswordHash, ErrorMessages.PASSWORD_HASH_CANNOT_BE_NULL);
+		this.validatedAt = Instant.now();
+		touch();
 	}
 }

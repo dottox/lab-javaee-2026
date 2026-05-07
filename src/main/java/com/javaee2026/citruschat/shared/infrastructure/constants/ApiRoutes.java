@@ -4,7 +4,16 @@ public final class ApiRoutes {
 
 	private ApiRoutes() {
 	}
+
 	private static final String API_BASE = "/api/v1";
-	private static final String ADMIN_BASE = API_BASE + "/admin";
-	public static final String API_ADMIN_USERS = ADMIN_BASE + "/users";
+	// ===================== BASE API Routes ====================
+	private static final String API_ADMIN_BASE = API_BASE + "/admin";
+	private static final String API_AUTH_BASE = API_BASE + "/auth";
+	// ===================== END BASE API Routes ====================
+
+	// ===================== ADMIN API Routes ====================
+	public static final String API_ADMIN_USERS = API_ADMIN_BASE + "/users";
+	// ===================== END ADMIN API Routes ====================
+
+	public static final String API_AUTH_VALIDATE_ACCOUNT = API_AUTH_BASE + "/validate-account";
 }

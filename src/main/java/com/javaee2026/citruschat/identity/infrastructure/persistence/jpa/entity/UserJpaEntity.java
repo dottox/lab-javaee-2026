@@ -27,6 +27,9 @@ public class UserJpaEntity {
 	@Column(nullable = false)
 	private String passwordHash;
 
+	@Column(nullable = true)
+	private Instant validatedAt;
+
 	@Column(nullable = false, updatable = false)
 	private Instant createdAt;
 
