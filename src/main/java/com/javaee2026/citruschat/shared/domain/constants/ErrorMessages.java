@@ -11,6 +11,7 @@ public final class ErrorMessages {
 	public static final String USERNAME_ALREADY_IN_USE = "Username already in use";
 	public static final String PHONE_NUMBER_ALREADY_IN_USE = "Phone number already in use";
 
+	public static final String USER_NOT_FOUND = "User not found";
 	public static final String USER_ID_CANNOT_BE_NULL = "UserId cannot be null";
 	public static final String USER_ALREADY_ACTIVE = "User already active";
 	public static final String USER_ALREADY_INACTIVE = "User already inactive";
@@ -21,6 +22,7 @@ public final class ErrorMessages {
 
 	public static final String EMAIL_CANNOT_BE_NULL = "Email cannot be null";
 	public static final String INVALID_EMAIL_FORMAT = "Invalid email format";
+	public static final String INVALID_TEMPORARY_PASSWORD = "Invalid temporary password";
 
 	public static final String NAME_CANNOT_BE_EMPTY = "Name cannot be empty";
 	public static final String USERNAME_CANNOT_BE_NULL = "Username cannot be null";

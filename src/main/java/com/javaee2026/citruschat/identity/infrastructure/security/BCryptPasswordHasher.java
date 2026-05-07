@@ -17,4 +17,9 @@ public class BCryptPasswordHasher implements IPasswordHasher {
 	public String hash(String rawPassword) {
 		return passwordEncoder.encode(rawPassword);
 	}
+
+	@Override
+	public boolean matches(final String rawPassword, final String hashedPassword) {
+		return passwordEncoder.matches(rawPassword, hashedPassword);
+	}
 }
