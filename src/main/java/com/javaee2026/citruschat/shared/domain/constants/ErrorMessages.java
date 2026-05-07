@@ -2,9 +2,12 @@ package com.javaee2026.citruschat.shared.domain.constants;
 
 public final class ErrorMessages {
 
+	public static final String MESSAGE_CONTENT_CANNOT_BE_EMPTY = "Message content cannot be empty";
+
 	private ErrorMessages() {
 	}
 
+	public static final String VALIDATION_ERROR = "Validation error";
 	public static final String UNEXPECTED_ERROR = "Unexpected error";
 
 	public static final String EMAIL_ALREADY_IN_USE = "Email already in use";
@@ -15,6 +18,7 @@ public final class ErrorMessages {
 	public static final String USER_ID_CANNOT_BE_NULL = "UserId cannot be null";
 	public static final String USER_ALREADY_ACTIVE = "User already active";
 	public static final String USER_ALREADY_INACTIVE = "User already inactive";
+	public static final String USER_ALREADY_VALIDATED = "User already validated";
 
 	public static final String PASSWORD_HASH_CANNOT_BE_NULL = "Password hash cannot be null";
 	public static final String CREATED_AT_CANNOT_BE_NULL = "createdAt cannot be null";
@@ -36,5 +40,9 @@ public final class ErrorMessages {
 
 	public static String usernameLengthBetween(int min, int max) {
 		return "Username must be between " + min + " and " + max + " characters";
+	}
+
+	public static String MESSAGE_CONTENT_TOO_LONG(int maxLength) {
+		return "Message content cannot exceed " + maxLength + " characters";
 	}
 }

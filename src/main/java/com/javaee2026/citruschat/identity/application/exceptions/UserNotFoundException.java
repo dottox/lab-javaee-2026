@@ -4,9 +4,9 @@ import com.javaee2026.citruschat.shared.application.exceptions.BusinessException
 import com.javaee2026.citruschat.shared.domain.constants.ErrorMessages;
 import com.javaee2026.citruschat.shared.domain.errors.ErrorCode;
 
-public class EmailAlreadyInUseException extends BusinessException {
+public class UserNotFoundException extends BusinessException {
 
-	public EmailAlreadyInUseException() {
-		super(ErrorCode.EMAIL_ALREADY_IN_USE, ErrorMessages.EMAIL_ALREADY_IN_USE);
+	public UserNotFoundException() {
+		super(ErrorCode.USER_NOT_FOUND, ErrorMessages.USER_NOT_FOUND);
 	}
 }

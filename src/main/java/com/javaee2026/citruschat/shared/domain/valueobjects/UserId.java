@@ -1,5 +1,6 @@
 package com.javaee2026.citruschat.shared.domain.valueobjects;
 
+import com.javaee2026.citruschat.identity.domain.exceptions.InvalidUserException;
 import com.javaee2026.citruschat.shared.domain.constants.ErrorMessages;
 
 import java.util.UUID;
@@ -10,7 +11,7 @@ public final class UserId {
 
 	public UserId(UUID value) {
 		if (value == null) {
-			throw new IllegalArgumentException(ErrorMessages.USER_ID_CANNOT_BE_NULL);
+			throw new InvalidUserException(ErrorMessages.USER_ID_CANNOT_BE_NULL);
 		}
 		this.value = value;
 	}

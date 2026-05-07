@@ -1,5 +1,6 @@
 package com.javaee2026.citruschat.identity.domain.valueobjects;
 
+import com.javaee2026.citruschat.identity.domain.exceptions.InvalidPersonNameException;
 import com.javaee2026.citruschat.shared.domain.constants.ErrorMessages;
 
 public final class PersonName {
@@ -8,7 +9,7 @@ public final class PersonName {
 
 	public PersonName(String value) {
 		if (value == null || value.isBlank()) {
-			throw new IllegalArgumentException(ErrorMessages.NAME_CANNOT_BE_EMPTY);
+			throw new InvalidPersonNameException(ErrorMessages.NAME_CANNOT_BE_EMPTY);
 		}
 
 		this.value = value.trim();

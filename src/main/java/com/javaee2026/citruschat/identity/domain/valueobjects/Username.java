@@ -1,5 +1,6 @@
 package com.javaee2026.citruschat.identity.domain.valueobjects;
 
+import com.javaee2026.citruschat.identity.domain.exceptions.InvalidUsernameException;
 import com.javaee2026.citruschat.shared.domain.constants.ErrorMessages;
 import lombok.Getter;
 
@@ -13,9 +14,8 @@ public final class Username {
 	private final String value;
 
 	public Username(String value) {
-
 		if (value == null) {
-			throw new IllegalArgumentException(ErrorMessages.USERNAME_CANNOT_BE_NULL);
+			throw new InvalidUsernameException(ErrorMessages.USERNAME_CANNOT_BE_NULL);
 		}
 
 		validate(value);
@@ -24,27 +24,24 @@ public final class Username {
 	}
 
 	private void validate(String username) {
-
 		if (username.isBlank()) {
-			throw new IllegalArgumentException(ErrorMessages.USERNAME_CANNOT_BE_EMPTY);
+			throw new InvalidUsernameException(ErrorMessages.USERNAME_CANNOT_BE_EMPTY);
 		}
 
 		if (username.length() < MIN_LENGTH || username.length() > MAX_LENGTH) {
-
-			throw new IllegalArgumentException(ErrorMessages.usernameLengthBetween(MIN_LENGTH, MAX_LENGTH));
+			throw new InvalidUsernameException(ErrorMessages.usernameLengthBetween(MIN_LENGTH, MAX_LENGTH));
 		}
 
 		if (!username.matches(USERNAME_REGEX)) {
-			throw new IllegalArgumentException(ErrorMessages.USERNAME_INVALID_CHARACTERS);
+			throw new InvalidUsernameException(ErrorMessages.USERNAME_INVALID_CHARACTERS);
 		}
 
 		if (username.startsWith("_") || username.endsWith("_")) {
-
-			throw new IllegalArgumentException(ErrorMessages.USERNAME_INVALID_BOUNDARY_UNDERSCORE);
+			throw new InvalidUsernameException(ErrorMessages.USERNAME_INVALID_BOUNDARY_UNDERSCORE);
 		}
 
 		if (username.contains("__")) {
-			throw new IllegalArgumentException(ErrorMessages.USERNAME_CONSECUTIVE_UNDERSCORES);
+			throw new InvalidUsernameException(ErrorMessages.USERNAME_CONSECUTIVE_UNDERSCORES);
 		}
 	}
 }

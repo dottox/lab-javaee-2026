@@ -1,40 +1,46 @@
 package com.javaee2026.citruschat.shared.infrastructure.web;
 
-import com.javaee2026.citruschat.identity.application.exceptions.EmailAlreadyInUseException;
-import com.javaee2026.citruschat.identity.application.exceptions.PhoneNumberAlreadyInUseException;
-import com.javaee2026.citruschat.identity.application.exceptions.UsernameAlreadyInUseException;
-import com.javaee2026.citruschat.identity.domain.exceptions.UserAlreadyActiveException;
-import com.javaee2026.citruschat.identity.domain.exceptions.UserAlreadyInactiveException;
+import com.javaee2026.citruschat.shared.application.exceptions.BusinessException;
 import com.javaee2026.citruschat.shared.domain.constants.ErrorMessages;
 import com.javaee2026.citruschat.shared.domain.errors.ErrorCode;
 import com.javaee2026.citruschat.shared.infrastructure.web.dto.ApiErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 
-import java.time.Instant;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-	@ExceptionHandler(EmailAlreadyInUseException.class)
-	public ResponseEntity<ApiErrorResponse> handleEmailAlreadyInUse(EmailAlreadyInUseException ex,
-			HttpServletRequest request) {
-		return buildErrorResponse(HttpStatus.CONFLICT, ex.getErrorCode(), ex.getMessage(), request);
+	@ExceptionHandler(BusinessException.class)
+	public ResponseEntity<ApiErrorResponse> handleBusinessException(BusinessException ex, HttpServletRequest request) {
+		return buildErrorResponse(ex.getErrorCode().getHttpStatus(), ex.getErrorCode(), ex.getMessage(), request);
 	}
 
-	@ExceptionHandler(UsernameAlreadyInUseException.class)
-	public ResponseEntity<ApiErrorResponse> handleUsernameAlreadyInUse(UsernameAlreadyInUseException ex,
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<ApiErrorResponse> handleValidationException(MethodArgumentNotValidException ex,
 			HttpServletRequest request) {
-		return buildErrorResponse(HttpStatus.CONFLICT, ex.getErrorCode(), ex.getMessage(), request);
+		Map<String, String[]> errors = new HashMap<>();
+
+		ex.getBindingResult().getFieldErrors()
+				.forEach(error -> errors.put(error.getField(), new String[]{error.getDefaultMessage()}));
+
+		ApiErrorResponse response = ApiErrorResponse.validation("Validation error", HttpStatus.BAD_REQUEST.value(),
+				errors, request.getRequestURI());
+
+		return ResponseEntity.badRequest().body(response);
 	}
 
-	@ExceptionHandler(PhoneNumberAlreadyInUseException.class)
-	public ResponseEntity<ApiErrorResponse> handlePhoneNumberAlreadyInUse(PhoneNumberAlreadyInUseException ex,
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public ResponseEntity<ApiErrorResponse> handleInvalidJson(HttpMessageNotReadableException ex,
 			HttpServletRequest request) {
-		return buildErrorResponse(HttpStatus.CONFLICT, ex.getErrorCode(), ex.getMessage(), request);
+		return buildErrorResponse(HttpStatus.BAD_REQUEST, ErrorCode.UNEXPECTED_ERROR, "Invalid request body", request);
 	}
 
 	@ExceptionHandler(IllegalArgumentException.class)
@@ -51,21 +57,9 @@ public class GlobalExceptionHandler {
 
 	private ResponseEntity<ApiErrorResponse> buildErrorResponse(HttpStatus status, ErrorCode errorCode, String message,
 			HttpServletRequest request) {
-		ApiErrorResponse error = new ApiErrorResponse(Instant.now(), status.value(), status.getReasonPhrase(),
-				errorCode.name(), message, request.getRequestURI());
+		ApiErrorResponse error = ApiErrorResponse.of(message, status.value(), errorCode.name(),
+				request.getRequestURI());
 
 		return ResponseEntity.status(status).body(error);
-	}
-
-	@ExceptionHandler(UserAlreadyInactiveException.class)
-	public ResponseEntity<ApiErrorResponse> handleUserAlreadyInactive(UserAlreadyInactiveException ex,
-			HttpServletRequest request) {
-		return buildErrorResponse(HttpStatus.CONFLICT, ErrorCode.USER_ALREADY_INACTIVE, ex.getMessage(), request);
-	}
-
-	@ExceptionHandler(UserAlreadyActiveException.class)
-	public ResponseEntity<ApiErrorResponse> handleUserAlreadyInactive(UserAlreadyActiveException ex,
-			HttpServletRequest request) {
-		return buildErrorResponse(HttpStatus.CONFLICT, ErrorCode.USER_ALREADY_ACTIVE, ex.getMessage(), request);
 	}
 }
