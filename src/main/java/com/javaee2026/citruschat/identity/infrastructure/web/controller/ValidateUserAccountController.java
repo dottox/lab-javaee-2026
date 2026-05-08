@@ -4,8 +4,10 @@ import com.javaee2026.citruschat.identity.application.commands.ValidateUserAccou
 import com.javaee2026.citruschat.identity.application.usecases.ValidateUserAccountUseCase;
 import com.javaee2026.citruschat.identity.infrastructure.web.dto.request.ValidateUserAccountRequest;
 import com.javaee2026.citruschat.identity.infrastructure.web.dto.response.ValidateUserAccountResponse;
+import com.javaee2026.citruschat.shared.domain.constants.ApiResponseMessages;
 import com.javaee2026.citruschat.shared.infrastructure.constants.ApiRoutes;
 
+import com.javaee2026.citruschat.shared.infrastructure.web.ApiResponses;
 import com.javaee2026.citruschat.shared.infrastructure.web.dto.ApiResponse;
 import jakarta.validation.Valid;
 
@@ -48,6 +50,6 @@ public class ValidateUserAccountController {
 
 		ValidateUserAccountResponse response = new ValidateUserAccountResponse(request.username(), true);
 
-		return ResponseEntity.ok(ApiResponse.success("Account validated successfully", response));
+		return ApiResponses.ok(ApiResponseMessages.VALIDATE_USER_ACCOUNT_SUCCESS, response);
 	}
 }
