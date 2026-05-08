@@ -5,11 +5,12 @@ import com.javaee2026.citruschat.identity.application.results.RegisterUserResult
 import com.javaee2026.citruschat.identity.application.usecases.RegisterUserUseCase;
 import com.javaee2026.citruschat.identity.infrastructure.web.dto.request.RegisterUserRequest;
 import com.javaee2026.citruschat.identity.infrastructure.web.dto.response.RegisterUserResponse;
+import com.javaee2026.citruschat.shared.domain.constants.ApiResponseMessages;
 import com.javaee2026.citruschat.shared.infrastructure.constants.ApiRoutes;
+import com.javaee2026.citruschat.shared.infrastructure.web.ApiResponses;
 import com.javaee2026.citruschat.shared.infrastructure.web.dto.ApiResponse;
 
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +34,6 @@ public class RegisterUserController {
 				result.user().getEmail().getValue(), result.user().getUsername().getValue(),
 				result.user().getPhoneNumber().getValue(), result.temporaryPassword());
 
-		return ResponseEntity.status(HttpStatus.CREATED)
-				.body(ApiResponse.success("User registered successfully", response));
+		return ApiResponses.created(ApiResponseMessages.REGISTRATION_SUCCESS, response);
 	}
 }
