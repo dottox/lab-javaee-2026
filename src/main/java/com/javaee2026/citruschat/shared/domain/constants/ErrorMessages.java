@@ -37,6 +37,7 @@ public final class ErrorMessages {
 
 	public static final String PHONE_NUMBER_CANNOT_BE_NULL = "Phone number cannot be null";
 	public static final String INVALID_PHONE_NUMBER_FORMAT = "Invalid phone number format";
+	public static final String INVALID_CREDENTIALS = "Invalid credentials";
 
 	public static String usernameLengthBetween(int min, int max) {
 		return "Username must be between " + min + " and " + max + " characters";

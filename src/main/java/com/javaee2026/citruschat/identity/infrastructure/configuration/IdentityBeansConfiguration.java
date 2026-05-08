@@ -109,4 +109,5 @@ public class IdentityBeansConfiguration {
 			final IPasswordHasher passwordHasher) {
 		return new ValidateUserAccountUseCase(userRepository, passwordHasher);
 	}
+
 }
