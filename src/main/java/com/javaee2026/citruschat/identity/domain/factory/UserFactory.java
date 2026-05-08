@@ -15,9 +15,7 @@ public class UserFactory {
 	public User createNew(UserEmail email, Username username, PhoneNumber phoneNumber, String passwordHash) {
 		Instant now = Instant.now();
 
-		return new User(UserId.newId(), email, username, phoneNumber, passwordHash, now, now, null, // validatedAt
-				null // deletedAt
-		);
+		return new User(UserId.newId(), email, username, phoneNumber, passwordHash, now, now, null, null);
 	}
 
 	// reconstitute = reconstruir desde la base de datos

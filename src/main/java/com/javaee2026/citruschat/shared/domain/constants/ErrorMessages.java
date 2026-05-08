@@ -39,6 +39,17 @@ public final class ErrorMessages {
 	public static final String INVALID_PHONE_NUMBER_FORMAT = "Invalid phone number format";
 	public static final String INVALID_CREDENTIALS = "Invalid credentials";
 
+	public static final String MESSAGE_ID_NOT_FOUND = "Message id not found";
+	public static final String MESSAGE_ID_CANNOT_BE_NULL = "Message cannot be null";
+	public static final String MESSAGE_CANNOT_BE_EDITED = "Message cannot be edited";
+	public static final String MESSAGE_ALREADY_DELETED = "Message already deleted";
+
+	public static final String DEVICE_ID_NOT_FOUND = "Device id not found";
+	public static final String DEVICE_ID_CANNOT_BE_NULL = "Device id cannot be null";
+
+	public static final String CHATROOM_ID_NOT_FOUND = "Chatroom id not found";
+	public static final String CHATROOM_ID_CANNOT_BE_NULL = "Chatroom id cannot be null";
+
 	public static String usernameLengthBetween(int min, int max) {
 		return "Username must be between " + min + " and " + max + " characters";
 	}

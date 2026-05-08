@@ -1,6 +1,6 @@
-package com.javaee2026.citruschat.chat.domain.valueobjects;
+package com.javaee2026.citruschat.messaging.domain.valueobjects;
 
-import com.javaee2026.citruschat.chat.domain.exceptions.InvalidMessageContentException;
+import com.javaee2026.citruschat.messaging.domain.exceptions.InvalidMessageContentException;
 import com.javaee2026.citruschat.shared.domain.constants.ErrorMessages;
 
 public class MessageContent {
