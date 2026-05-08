@@ -13,8 +13,6 @@ import com.javaee2026.citruschat.shared.infrastructure.web.dto.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.jwt.Jwt;
 
 @RestController
 public class LoginController {
@@ -23,11 +21,6 @@ public class LoginController {
 
 	public LoginController(LoginUserUseCase loginUserUseCase) {
 		this.loginUserUseCase = loginUserUseCase;
-	}
-
-	@GetMapping("/me")
-	public ResponseEntity<?> me(@AuthenticationPrincipal Jwt jwt) {
-		return ResponseEntity.ok(jwt.getClaims());
 	}
 
 	@PostMapping(ApiRoutes.API_AUTH_LOGIN)
