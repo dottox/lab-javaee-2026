@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(ApiRoutes.API_ADMIN_USERS)
 public class RegisterUserController {
 
 	private final RegisterUserUseCase registerUserUseCase;
@@ -23,7 +22,7 @@ public class RegisterUserController {
 		this.registerUserUseCase = registerUserUseCase;
 	}
 
-	@PostMapping
+	@PostMapping(ApiRoutes.API_ADMIN_USERS)
 	public ResponseEntity<ApiResponse<RegisterUserResponse>> register(@Valid @RequestBody RegisterUserRequest request) {
 		RegisterUserCommand command = new RegisterUserCommand(request.email(), request.phoneNumber(),
 				request.firstName(), request.lastName());

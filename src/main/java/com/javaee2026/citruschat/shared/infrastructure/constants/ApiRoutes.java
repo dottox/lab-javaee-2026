@@ -15,5 +15,8 @@ public final class ApiRoutes {
 	public static final String API_ADMIN_USERS = API_ADMIN_BASE + "/users";
 	// ===================== END ADMIN API Routes ====================
 
+	// ===================== AUTH API Routes ====================
 	public static final String API_AUTH_VALIDATE_ACCOUNT = API_AUTH_BASE + "/validate-account";
+	public static final String API_AUTH_LOGIN = API_AUTH_BASE + "/login";
+	// ===================== END API Routes ====================
 }
