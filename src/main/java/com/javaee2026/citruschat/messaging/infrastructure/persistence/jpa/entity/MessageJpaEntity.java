@@ -1,20 +1,21 @@
 package com.javaee2026.citruschat.messaging.infrastructure.persistence.jpa.entity;
 
+import com.javaee2026.citruschat.shared.infrastructure.persistence.constants.TableNames;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.domain.Persistable;
 
 import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-@Table(name = "messages")
+@Table(name = TableNames.Messaging.MESSAGES)
 @Getter
 @Setter
-public class MessageJpaEntity {
+public class MessageJpaEntity implements Persistable<UUID> {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 
 	@Column(name = "chat_room_id", nullable = false)
@@ -34,4 +35,23 @@ public class MessageJpaEntity {
 
 	@Column(name = "deleted_at")
 	private Instant deletedAt;
+
+	@Transient
+	private boolean isNew = true;
+
+	@Override
+	public UUID getId() {
+		return id;
+	}
+
+	@Override
+	public boolean isNew() {
+		return isNew;
+	}
+
+	@PostLoad
+	@PostPersist
+	void markNotNew() {
+		this.isNew = false;
+	}
 }

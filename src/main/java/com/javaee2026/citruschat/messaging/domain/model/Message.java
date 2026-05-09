@@ -28,6 +28,11 @@ public class Message {
 	private Instant deletedAt;
 
 	public Message(MessageId id, ChatRoomId chatRoomId, DeviceId senderDeviceId, MessageId replyToMessageId,
+			Instant createdAt) {
+		this(id, chatRoomId, senderDeviceId, replyToMessageId, createdAt, null, null);
+	}
+
+	public Message(MessageId id, ChatRoomId chatRoomId, DeviceId senderDeviceId, MessageId replyToMessageId,
 			Instant createdAt, Instant editedAt, Instant deletedAt) {
 		this.id = requireNonNull(id, ErrorMessages.MESSAGE_ID_CANNOT_BE_NULL);
 		this.chatRoomId = requireNonNull(chatRoomId, ErrorMessages.CHATROOM_ID_CANNOT_BE_NULL);

@@ -9,4 +9,5 @@ public final class ApiResponseMessages {
 	public static String REGISTRATION_SUCCESS = "Registration successful";
 	public static String VALIDATE_USER_ACCOUNT_SUCCESS = "User account validated successfully.";
 	public static final String CURRENT_USER_SUCCESS = "Current user retrieved successfully.";
+	public static final String MESSAGE_SENT_SUCCESS = "Message sent successfully.";
 }

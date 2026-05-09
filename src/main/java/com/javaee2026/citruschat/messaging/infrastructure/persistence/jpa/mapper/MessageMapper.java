@@ -7,7 +7,7 @@ import com.javaee2026.citruschat.shared.domain.valueobjects.ChatRoomId;
 import com.javaee2026.citruschat.shared.domain.valueobjects.DeviceId;
 import com.javaee2026.citruschat.shared.domain.valueobjects.MessageId;
 
-public class MessageMapper {
+public final class MessageMapper {
 
 	private final MessageFactory messageFactory;
 
@@ -17,7 +17,10 @@ public class MessageMapper {
 
 	public Message toDomain(MessageJpaEntity entity) {
 		return messageFactory.reconstitute(new MessageId(entity.getId()), new ChatRoomId(entity.getChatRoomId()),
-				new DeviceId(entity.getSenderDeviceId()), new MessageId(entity.getReplyToMessageId()),
+				new DeviceId(entity.getSenderDeviceId()),
+
+				entity.getReplyToMessageId() != null ? new MessageId(entity.getReplyToMessageId()) : null,
+
 				entity.getCreatedAt(), entity.getEditedAt(), entity.getDeletedAt());
 	}
 
@@ -27,7 +30,9 @@ public class MessageMapper {
 		entity.setId(message.getId().value());
 		entity.setChatRoomId(message.getChatRoomId().value());
 		entity.setSenderDeviceId(message.getSenderDeviceId().value());
-		entity.setReplyToMessageId(message.getReplyToMessageId().value());
+
+		entity.setReplyToMessageId(
+				message.getReplyToMessageId() != null ? message.getReplyToMessageId().value() : null);
 
 		entity.setCreatedAt(message.getCreatedAt());
 		entity.setEditedAt(message.getEditedAt());

@@ -11,15 +11,9 @@ import java.time.Instant;
 @Component
 public class MessageFactory {
 
-	public Message createNew(ChatRoomId chatRoomId, DeviceId senderDeviceId, MessageId replyToMessageId,
-			Instant createdAt, Instant editedAt, Instant deletedAt) {
-		Instant now = Instant.now();
+	public Message createNew(ChatRoomId chatRoomId, DeviceId senderDeviceId, MessageId replyToMessageId) {
 
-		return new Message(MessageId.newId(), chatRoomId, senderDeviceId, replyToMessageId, // This can be null
-				now, // CreatedAt
-				null, // EditedAt
-				null // EditedAt
-		);
+		return new Message(MessageId.newId(), chatRoomId, senderDeviceId, replyToMessageId, Instant.now(), null, null);
 	}
 
 	public Message reconstitute(MessageId id, ChatRoomId chatRoomId, DeviceId senderDeviceId,

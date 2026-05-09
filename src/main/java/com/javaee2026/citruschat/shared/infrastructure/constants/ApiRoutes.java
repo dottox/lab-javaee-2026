@@ -9,6 +9,7 @@ public final class ApiRoutes {
 	// ===================== BASE API Routes ====================
 	private static final String API_ADMIN_BASE = API_BASE + "/admin"; // => /api/v1/admin
 	private static final String API_AUTH_BASE = API_BASE + "/auth"; // => /api/v1/auth
+	private static final String API_MESSAGES_BASE = API_BASE + "/messages"; // => /api/v1/auth
 	// ===================== END BASE API Routes ====================
 
 	// ===================== ADMIN API Routes ====================
@@ -20,5 +21,9 @@ public final class ApiRoutes {
 																								// /api/v1/auth/validate-account
 	public static final String API_AUTH_LOGIN = API_AUTH_BASE + "/login"; // => /api/v1/auth/login
 	public static final String API_AUTH_ME = API_AUTH_BASE + "/me"; // => /api/v1/auth/me
+	// ===================== END API Routes ====================
+
+	// ===================== MESSAGES API Routes ====================
+	public static final String API_MESSAGES = API_MESSAGES_BASE; // => /api/v1/messages
 	// ===================== END API Routes ====================
 }
