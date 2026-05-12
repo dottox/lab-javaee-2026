@@ -5,11 +5,12 @@ public final class ApiRoutes {
 	private ApiRoutes() {
 	}
 
-	private static final String API_BASE = "/api/v1"; // => /api/v1
 	// ===================== BASE API Routes ====================
+	private static final String API_BASE = "/api/v1"; // => /api/v1
 	private static final String API_ADMIN_BASE = API_BASE + "/admin"; // => /api/v1/admin
 	private static final String API_AUTH_BASE = API_BASE + "/auth"; // => /api/v1/auth
 	private static final String API_MESSAGES_BASE = API_BASE + "/messages"; // => /api/v1/auth
+	private static final String API_CHATROOM_BASE = API_BASE + "/chatroom";
 	// ===================== END BASE API Routes ====================
 
 	// ===================== ADMIN API Routes ====================
@@ -26,4 +27,9 @@ public final class ApiRoutes {
 	// ===================== MESSAGES API Routes ====================
 	public static final String API_MESSAGES = API_MESSAGES_BASE; // => /api/v1/messages
 	// ===================== END API Routes ====================
+
+	// ===================== CHAT_ROOM API ROUTES ====================
+	public static final String API_CHAT_ROOMS = API_CHATROOM_BASE;
+	public static final String API_CHAT_ROOMS_CREATE = API_MESSAGES_BASE + "/create"; // => /api/v1/chatroom/create
+	// ===================== END API ROUTES ====================
 }

@@ -1,4 +1,5 @@
 package com.javaee2026.citruschat.identity.infrastructure.persistence.jpa.entity;
+import com.javaee2026.citruschat.identity.domain.enums.DeviceType;
 import com.javaee2026.citruschat.shared.infrastructure.persistence.constants.TableNames;
 import jakarta.persistence.*;
 

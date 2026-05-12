@@ -49,6 +49,8 @@ public final class ErrorMessages {
 
 	public static final String CHATROOM_ID_NOT_FOUND = "Chatroom id not found";
 	public static final String CHATROOM_ID_CANNOT_BE_NULL = "Chatroom id cannot be null";
+	public static final String CHATROOM_CANNOT_BE_EDITED = "Chatroom cannot be edited";
+	public static final String CHATROOM_ALREADY_DELETED = "Chatroom already deleted";
 
 	public static String usernameLengthBetween(int min, int max) {
 		return "Username must be between " + min + " and " + max + " characters";
