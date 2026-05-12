@@ -1,13 +1,18 @@
-package com.javaee2026.citruschat.messaging.infrastructure.persistence.entities;
+package com.javaee2026.citruschat.messaging.infrastructure.persistence.jpa.entity;
 
 import com.javaee2026.citruschat.messaging.domain.enums.ChatRoomType;
+import com.javaee2026.citruschat.shared.infrastructure.persistence.constants.TableNames;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-@Table(name = "chat_rooms")
+@Getter
+@Setter
+@Table(name = TableNames.Messaging.CHAT_ROOMS)
 public class ChatRoomJpaEntity {
 
 	@Id
@@ -34,7 +39,4 @@ public class ChatRoomJpaEntity {
 
 	@Column(name = "deleted_at")
 	private Instant deletedAt;
-
-	protected ChatRoomJpaEntity() {
-	}
 }
