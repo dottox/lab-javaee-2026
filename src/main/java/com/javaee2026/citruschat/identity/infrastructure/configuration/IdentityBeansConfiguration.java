@@ -1,8 +1,10 @@
 package com.javaee2026.citruschat.identity.infrastructure.configuration;
 
+import com.javaee2026.citruschat.identity.application.ports.IAdminAccessRepository;
 import com.javaee2026.citruschat.identity.application.ports.IDefaultPasswordGenerator;
 import com.javaee2026.citruschat.identity.application.ports.IPasswordHasher;
 import com.javaee2026.citruschat.identity.application.ports.IUserRepository;
+import com.javaee2026.citruschat.identity.application.usecases.CheckAdminAccessUseCase;
 import com.javaee2026.citruschat.identity.application.usecases.RegisterUserUseCase;
 import com.javaee2026.citruschat.identity.application.usecases.ValidateUserAccountUseCase;
 import com.javaee2026.citruschat.identity.domain.factory.UserFactory;
@@ -108,6 +110,11 @@ public class IdentityBeansConfiguration {
 	public ValidateUserAccountUseCase validateUserAccountUseCase(final IUserRepository userRepository,
 			final IPasswordHasher passwordHasher) {
 		return new ValidateUserAccountUseCase(userRepository, passwordHasher);
+	}
+
+	@Bean
+	public CheckAdminAccessUseCase checkAdminAccessUseCase(final IAdminAccessRepository adminAccessRepository) {
+		return new CheckAdminAccessUseCase(adminAccessRepository);
 	}
 
 }
