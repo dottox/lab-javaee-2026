@@ -4,12 +4,16 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
+@AutoConfigureMockMvc
 class JwtServiceTest {
 
 	private static final String JWT_SECRET = "27305f9519ddc64736b8f7662eecb5ec2c0eca3a12714ee08ea6b648897907a2";

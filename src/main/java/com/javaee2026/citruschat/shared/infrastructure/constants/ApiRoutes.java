@@ -15,6 +15,7 @@ public final class ApiRoutes {
 
 	// ===================== ADMIN API Routes ====================
 	public static final String API_ADMIN_USERS = API_ADMIN_BASE + "/users"; // => /api/v1/admin/users
+	public static final String API_ADMIN_ACCESS = API_ADMIN_BASE + "/access";
 	// ===================== END ADMIN API Routes ====================
 
 	// ===================== AUTH API Routes ====================

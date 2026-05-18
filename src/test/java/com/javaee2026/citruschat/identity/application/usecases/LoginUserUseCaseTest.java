@@ -12,6 +12,8 @@ import com.javaee2026.citruschat.identity.infrastructure.security.jwt.JwtService
 import com.javaee2026.citruschat.shared.domain.valueobjects.UserId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.Instant;
@@ -21,6 +23,8 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
+@AutoConfigureMockMvc
 class LoginUserUseCaseTest {
 
 	private IUserRepository userRepository;

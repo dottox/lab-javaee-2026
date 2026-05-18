@@ -9,6 +9,8 @@ import com.javaee2026.citruschat.messaging.domain.model.Message;
 import com.javaee2026.citruschat.messaging.domain.model.MessageDevicePayload;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,6 +18,8 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
+@AutoConfigureMockMvc
 class SendMessageUseCaseTest {
 
 	private final IMessageRepository messageRepository = mock(IMessageRepository.class);

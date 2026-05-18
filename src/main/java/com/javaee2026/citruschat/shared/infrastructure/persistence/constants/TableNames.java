@@ -14,6 +14,8 @@ public final class TableNames {
 	public static final class Identity {
 		public static final String USERS = "users";
 		public static final String USER_DEVICES = "user_devices";
+		public static final String POSITIONS = "positions";
+		public static final String USER_ORGANIZATION = "user_organization";
 	}
 
 	public static final class Chat {
