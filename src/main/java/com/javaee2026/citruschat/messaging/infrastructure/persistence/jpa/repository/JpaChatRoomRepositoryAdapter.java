@@ -3,7 +3,11 @@ package com.javaee2026.citruschat.messaging.infrastructure.persistence.jpa.repos
 import com.javaee2026.citruschat.messaging.application.ports.IChatRoomRepository;
 import com.javaee2026.citruschat.messaging.domain.model.ChatRoom;
 import com.javaee2026.citruschat.messaging.infrastructure.persistence.jpa.mapper.ChatRoomMapper;
+import com.javaee2026.citruschat.shared.domain.valueobjects.ParticipantId;
+import com.javaee2026.citruschat.shared.domain.valueobjects.UserId;
 import jakarta.transaction.Transactional;
+
+import java.util.List;
 
 public class JpaChatRoomRepositoryAdapter implements IChatRoomRepository {
 
@@ -20,5 +24,16 @@ public class JpaChatRoomRepositoryAdapter implements IChatRoomRepository {
 	@Transactional
 	public void save(ChatRoom chatRoom) {
 		chatRoomRepository.save(ChatRoomMapper.toJpa(chatRoom));
+	}
+
+	@Override
+	public List<ChatRoom> findChatRoomsCreatedBy(UserId creator) {
+		return chatRoomRepository.findByCreatedBy(creator.value()).stream().map(chatRoomMapper::toDomain).toList();
+	}
+
+	@Override
+	@Transactional
+	public void addParticipantToChat(ParticipantId participantId, ChatRoom chatRoom) {
+		chatRoom.addParticipant(participantId);
 	}
 }

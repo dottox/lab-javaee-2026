@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -30,6 +31,9 @@ public class ChatRoomJpaEntity {
 
 	@Column(nullable = false, name = "created_by")
 	private UUID createdBy;
+
+	@Column(nullable = false, name = "participants_ids")
+	private List<UUID> participantsIds;
 
 	@Column(nullable = false, name = "created_at")
 	private Instant createdAt;

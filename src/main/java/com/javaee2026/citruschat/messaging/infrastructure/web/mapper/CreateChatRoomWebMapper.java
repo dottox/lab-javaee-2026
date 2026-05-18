@@ -11,8 +11,7 @@ public class CreateChatRoomWebMapper {
 	}
 
 	public static CreateChatRoomCommand toCommand(CreateChatRoomRequest request, UUID creatorId) {
-
-		return new CreateChatRoomCommand(request.chatRoomType(), request.name(), creatorId);
+		return new CreateChatRoomCommand(request.chatRoomType(), request.name(), creatorId, request.participantIds());
 	}
 
 	public static CreateChatRoomResponse toResponse() {
