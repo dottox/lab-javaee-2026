@@ -1,24 +1,17 @@
 package com.javaee2026.citruschat.messaging.infrastructure.configuration;
 
 import com.javaee2026.citruschat.identity.application.ports.IUserRepository;
-import com.javaee2026.citruschat.messaging.application.ports.IChatParticipantRepository;
 import com.javaee2026.citruschat.messaging.application.ports.IChatRoomRepository;
 import com.javaee2026.citruschat.messaging.application.ports.IMessageRepository;
 import com.javaee2026.citruschat.messaging.application.usecases.CreateChatRoomUseCase;
 import com.javaee2026.citruschat.messaging.application.usecases.SendMessageUseCase;
-import com.javaee2026.citruschat.messaging.domain.factory.ChatParticipantFactory;
-import com.javaee2026.citruschat.messaging.domain.factory.ChatRoomFactory;
-import com.javaee2026.citruschat.messaging.domain.factory.MessageDevicePayloadFactory;
-import com.javaee2026.citruschat.messaging.domain.factory.MessageFactory;
-import com.javaee2026.citruschat.messaging.infrastructure.persistence.jpa.mapper.ChatParticipantMapper;
+import com.javaee2026.citruschat.messaging.domain.factory.*;
 import com.javaee2026.citruschat.messaging.infrastructure.persistence.jpa.mapper.ChatRoomMapper;
 import com.javaee2026.citruschat.messaging.infrastructure.persistence.jpa.mapper.MessageMapper;
 import com.javaee2026.citruschat.messaging.infrastructure.persistence.jpa.repository.*;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.swing.*;
 
 @Configuration
 public class MessagingBeansConfiguration {
@@ -67,26 +60,8 @@ public class MessagingBeansConfiguration {
 	}
 
 	@Bean
-	public ChatParticipantFactory chatParticipantFactory() {
-		return new ChatParticipantFactory();
-	}
-
-	@Bean
-	public ChatParticipantMapper ChatParticipantMapper(ChatParticipantFactory chatParticipantFactory) {
-		return new ChatParticipantMapper(chatParticipantFactory);
-	}
-
-	@Bean
-	public IChatParticipantRepository chatParticipantRepository(
-			SpingDataChatParticipantRepository chatParticipantRepository, ChatParticipantMapper chatParticipantMapper) {
-		return new JpaChatParticipantRepositoryAdapter(chatParticipantRepository, chatParticipantMapper);
-	}
-
-	@Bean
 	public CreateChatRoomUseCase createChatRoomUseCase(IChatRoomRepository chatRoomRepository,
-			ChatRoomFactory chatRoomFactory, IUserRepository userRepository,
-			ChatParticipantFactory chatParticipantFactory, IChatParticipantRepository chatParticipantRepository) {
-		return new CreateChatRoomUseCase(chatRoomRepository, chatRoomFactory, userRepository, chatParticipantFactory,
-				chatParticipantRepository);
+			ChatRoomFactory chatRoomFactory, IUserRepository userRepository) {
+		return new CreateChatRoomUseCase(chatRoomRepository, chatRoomFactory, userRepository);
 	}
 }

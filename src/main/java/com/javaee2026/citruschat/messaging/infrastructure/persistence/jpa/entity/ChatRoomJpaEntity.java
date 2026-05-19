@@ -23,24 +23,23 @@ public class ChatRoomJpaEntity {
 	@Column(nullable = false)
 	private ChatRoomType type;
 
-	@Column(name = "name")
 	private String name;
 
 	@Column(name = "avatar_url")
 	private String avatarUrl;
 
-	@Column(nullable = false, name = "created_by")
+	@Column(name = "created_by", nullable = false)
 	private UUID createdBy;
 
-	@Column(nullable = false, name = "participants_ids")
-	private List<UUID> participantsIds;
+	@OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL)
+	private List<ChatParticipantJpaEntity> participants;
 
-	@Column(nullable = false, name = "created_at")
+	@OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL)
+	private List<ChatRoleJpaEntity> roles;
+
+	@Column(name = "created_at", nullable = false)
 	private Instant createdAt;
 
-	@Column(name = "updated_at")
 	private Instant updatedAt;
-
-	@Column(name = "deleted_at")
 	private Instant deletedAt;
 }

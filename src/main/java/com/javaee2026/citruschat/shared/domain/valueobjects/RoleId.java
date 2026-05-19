@@ -1,6 +1,6 @@
 package com.javaee2026.citruschat.shared.domain.valueobjects;
 
-import com.javaee2026.citruschat.messaging.domain.exceptions.InvalidRoleException;
+import com.javaee2026.citruschat.messaging.domain.exceptions.InvalidChatRoleException;
 import com.javaee2026.citruschat.shared.domain.constants.ErrorMessages;
 
 import java.util.UUID;
@@ -10,7 +10,7 @@ public class RoleId {
 
 	public RoleId(UUID value) {
 		if (value == null) {
-			throw new InvalidRoleException(ErrorMessages.ROLE_ID_CANNOT_BE_NULL);
+			throw new InvalidChatRoleException(ErrorMessages.ROLE_ID_CANNOT_BE_NULL);
 		}
 		this.value = value;
 	}

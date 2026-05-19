@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.time.Instant;
+import java.util.List;
 
 import static java.util.Objects.requireNonNull;
 
@@ -18,25 +19,31 @@ public class ChatParticipant {
 
 	private final ChatRoomId chatRoomId;
 	private final UserId userId;
-	private final RoleId roleId;
+	private final List<RoleId> roles;
 
 	private final Instant joinedAt;
 	private final Instant leftAt;
 	private final MessageId lastReadMessageId;
 
-	public ChatParticipant(ParticipantId id, ChatRoomId chatRoomId, UserId userId, RoleId roleId, Instant joinedAt) {
-		this(id, chatRoomId, userId, roleId, joinedAt, null, null);
-	}
-
-	public ChatParticipant(ParticipantId id, ChatRoomId chatRoomId, UserId userId, RoleId roleId, Instant joinedAt,
-			Instant leftAt, MessageId lastReadMessageId) {
+	private ChatParticipant(ParticipantId id, ChatRoomId chatRoomId, UserId userId, List<RoleId> roles,
+			Instant joinedAt, Instant leftAt, MessageId lastReadMessageId) {
 		this.id = requireNonNull(id, ErrorMessages.PARTICIPANT_ID_CANNOT_BE_NULL);
 		this.chatRoomId = requireNonNull(chatRoomId, ErrorMessages.CHATROOM_ID_CANNOT_BE_NULL);
 		this.userId = requireNonNull(userId, ErrorMessages.USER_ID_CANNOT_BE_NULL);
-		this.roleId = requireNonNull(roleId, ErrorMessages.ROLE_ID_CANNOT_BE_NULL);
+		this.roles = requireNonNull(roles, ErrorMessages.ROLES_CANNOT_BE_NULL);
 		this.joinedAt = requireNonNull(joinedAt, "joinedAt cannot be null");
 		this.leftAt = leftAt;
 		this.lastReadMessageId = lastReadMessageId;
+	}
+
+	public static ChatParticipant createNew(ChatRoomId chatRoomId, UserId userId, List<RoleId> roles,
+			Instant joinedAt) {
+		return new ChatParticipant(ParticipantId.newId(), chatRoomId, userId, roles, joinedAt, null, null);
+	}
+
+	public static ChatParticipant reconstitute(ParticipantId id, ChatRoomId chatRoomId, UserId userId,
+			List<RoleId> roles, Instant joinedAt, Instant leftAt, MessageId lastReadMessageId) {
+		return new ChatParticipant(id, chatRoomId, userId, roles, joinedAt, leftAt, lastReadMessageId);
 	}
 
 }

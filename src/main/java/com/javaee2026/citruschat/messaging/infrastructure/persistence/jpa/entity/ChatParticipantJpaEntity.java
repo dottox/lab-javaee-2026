@@ -6,32 +6,33 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
+@Entity
+@Table(name = "chat_participants")
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
-@Table(name = "chat_participants")
 public class ChatParticipantJpaEntity {
 
 	@Id
-	@Column(name = "id", nullable = false, updatable = false)
 	private UUID id;
 
-	@Column(name = "chat_room_id", nullable = false)
-	private UUID chatRoomId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "chat_room_id", nullable = false)
+	private ChatRoomJpaEntity chatRoom;
 
 	@Column(name = "user_id", nullable = false)
 	private UUID userId;
 
-	@Column(name = "role_id", nullable = false)
-	private UUID roleId;
+	@ManyToMany
+	@JoinTable(name = "chat_participant_roles", joinColumns = @JoinColumn(name = "participant_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private List<ChatRoleJpaEntity> roles;
 
 	@Column(name = "joined_at", nullable = false)
 	private Instant joinedAt;
 
-	@Column(name = "left_at")
 	private Instant leftAt;
 
 	@Column(name = "last_read_message_id")

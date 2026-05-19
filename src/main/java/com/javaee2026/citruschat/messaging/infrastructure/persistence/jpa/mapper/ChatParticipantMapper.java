@@ -1,34 +1,50 @@
 package com.javaee2026.citruschat.messaging.infrastructure.persistence.jpa.mapper;
 
-import com.javaee2026.citruschat.messaging.domain.factory.ChatParticipantFactory;
 import com.javaee2026.citruschat.messaging.domain.model.ChatParticipant;
 import com.javaee2026.citruschat.messaging.infrastructure.persistence.jpa.entity.ChatParticipantJpaEntity;
+import com.javaee2026.citruschat.messaging.infrastructure.persistence.jpa.entity.ChatRoleJpaEntity;
+import com.javaee2026.citruschat.messaging.infrastructure.persistence.jpa.entity.ChatRoomJpaEntity;
 import com.javaee2026.citruschat.shared.domain.valueobjects.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class ChatParticipantMapper {
-	private final ChatParticipantFactory chatParticipantFactory;
 
-	public ChatParticipantMapper(ChatParticipantFactory chatParticipantFactory) {
-		this.chatParticipantFactory = chatParticipantFactory;
+	public static ChatParticipant toDomain(ChatParticipantJpaEntity entity) {
+
+		return ChatParticipant.reconstitute(new ParticipantId(entity.getId()),
+				new ChatRoomId(entity.getChatRoom().getId()), new UserId(entity.getUserId()),
+				entity.getRoles().stream().map(role -> new RoleId(role.getId())).toList(),
+
+				entity.getJoinedAt(), entity.getLeftAt(),
+				entity.getLastReadMessageId() != null ? new MessageId(entity.getLastReadMessageId()) : null);
 	}
 
-	public ChatParticipant toDomain(ChatParticipantJpaEntity entity) {
-		return chatParticipantFactory.reconstitute(new ParticipantId(entity.getId()),
-				new ChatRoomId(entity.getChatRoomId()), new UserId(entity.getUserId()), new RoleId(entity.getRoleId()),
-				entity.getJoinedAt(), entity.getLeftAt(), new MessageId(entity.getLastReadMessageId()));
-	}
-
-	public static ChatParticipantJpaEntity toJpa(ChatParticipant chatParticipant) {
+	public static ChatParticipantJpaEntity toJpa(ChatParticipant participant, ChatRoomJpaEntity chatRoom) {
 		ChatParticipantJpaEntity entity = new ChatParticipantJpaEntity();
 
-		entity.setId(chatParticipant.getId().value());
-		entity.setChatRoomId(chatParticipant.getChatRoomId().value());
-		entity.setUserId(chatParticipant.getUserId().value());
-		entity.setRoleId(chatParticipant.getRoleId().value());
+		entity.setId(participant.getId().value());
+		entity.setChatRoom(chatRoom);
+		entity.setUserId(participant.getUserId().value());
 
-		entity.setJoinedAt(chatParticipant.getJoinedAt());
-		entity.setLeftAt(chatParticipant.getLeftAt());
-		entity.setLastReadMessageId(chatParticipant.getLastReadMessageId().value());
+		List<ChatRoleJpaEntity> roleEntities = new ArrayList<>();
+
+		for (ChatRoleJpaEntity role : chatRoom.getRoles()) {
+
+			RoleId roleId = new RoleId(role.getId());
+
+			if (participant.getRoles().contains(roleId)) {
+				roleEntities.add(role);
+			}
+		}
+
+		entity.setRoles(roleEntities);
+
+		entity.setJoinedAt(participant.getJoinedAt());
+		entity.setLeftAt(participant.getLeftAt());
+		entity.setLastReadMessageId(
+				participant.getLastReadMessageId() != null ? participant.getLastReadMessageId().value() : null);
 
 		return entity;
 	}

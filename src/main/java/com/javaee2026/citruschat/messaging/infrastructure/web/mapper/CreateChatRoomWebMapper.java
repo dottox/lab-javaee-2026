@@ -6,7 +6,7 @@ import com.javaee2026.citruschat.messaging.infrastructure.web.dto.response.Creat
 
 import java.util.UUID;
 
-public class CreateChatRoomWebMapper {
+public final class CreateChatRoomWebMapper {
 	private CreateChatRoomWebMapper() {
 	}
 
